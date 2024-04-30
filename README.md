@@ -1,1 +1,1 @@
-# seuo-uosu
+# UOSU Elections Portal
