@@ -4,9 +4,9 @@ import { signIn } from "next-auth/react";
 import { useEffect } from "react";
 
 export default function Home() {
-	/* useEffect(() => {
+	useEffect(() => {
 		void signIn("azure-ad", { callbackUrl: `/vote` });
-	}); */
+	});
 
 	return (
 		<main className="flex flex-col items-center justify-center gap-8 p-2 text-white">
