@@ -1,23 +1,13 @@
 "use client";
 
-import { type Session } from "next-auth";
 import { SessionProvider, signIn, useSession } from "next-auth/react";
-import { useRouter } from "next/router";
+import { redirect } from "next/navigation";
 import { useEffect } from "react";
 import { api } from "~/trpc/react";
 
-export default function Home({
-	session,
-}: Readonly<{
-	session: Session & {
-		user: {
-			email: string;
-		};
-		expires: number;
-	};
-}>) {
+export default function Home() {
 	return (
-		<SessionProvider session={session}>
+		<SessionProvider>
 			<Main />
 		</SessionProvider>
 	);
@@ -25,7 +15,6 @@ export default function Home({
 
 function Main() {
 	const session = useSession();
-	const router = useRouter();
 
 	const accessKey = api.accessKey.getByEmail.useQuery({
 		email: session.data?.user.email ?? "",
@@ -39,11 +28,9 @@ function Main() {
 
 	useEffect(() => {
 		if (accessKey.data) {
-			void router.push(
-				`https://secure.electionbuddy.com/${accessKey.data.key}`,
-			);
+			redirect(`https://secure.electionbuddy.com/${accessKey.data.key}`);
 		}
-	}, [accessKey.data, router]);
+	}, [accessKey.data]);
 
 	return (
 		<div>
