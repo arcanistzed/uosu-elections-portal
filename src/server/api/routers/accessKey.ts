@@ -4,7 +4,7 @@ import { env } from "~/env";
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 
 export const accessKeyRouter = createTRPCRouter({
-	getEmail: publicProcedure
+	getByEmail: publicProcedure
 		.input(
 			z.object({
 				email: z.string().email(),
@@ -12,7 +12,7 @@ export const accessKeyRouter = createTRPCRouter({
 		)
 		.query(({ input, ctx }) => {
 			const { email } = input;
-			ctx.db.accessKey.findFirst({
+			return ctx.db.accessKey.findFirst({
 				where: {
 					email,
 				},
@@ -37,7 +37,7 @@ export const accessKeyRouter = createTRPCRouter({
 		)
 		.mutation(async ({ input, ctx }) => {
 			if (input.password !== env.ADMIN_PASSWORD) {
-				throw new Error("Invalid password");
+				throw new Error("Mot de passe invalide. Invalid password.");
 			}
 			await ctx.db.accessKey.deleteMany({});
 			return ctx.db.accessKey.createMany({
@@ -51,7 +51,7 @@ export const accessKeyRouter = createTRPCRouter({
 				password: z.string(),
 			}),
 		)
-		.query(({ input, ctx }) => {
+		.query(({ input }) => {
 			const { password } = input;
 			return password === env.ADMIN_PASSWORD;
 		}),

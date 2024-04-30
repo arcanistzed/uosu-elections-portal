@@ -1,23 +1,57 @@
 "use client";
 
-import { signIn } from "next-auth/react";
+import { type Session } from "next-auth";
+import { SessionProvider, signIn, useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 import { useEffect } from "react";
-import { useState } from "react";
+import { api } from "~/trpc/react";
 
-export default async function Home() {
-	const [email, setEmail] = use
-
-	useEffect(
-		() =>
-			void (async () => {
-				const response = await signIn("azure-ad");
-				console.log("Sign in response", response);
-
-				const email = response.user.email;
-
-			})(),
-		[],
+export default function Home({
+	session,
+}: Readonly<{
+	session: Session & {
+		user: {
+			email: string;
+		};
+		expires: number;
+	};
+}>) {
+	return (
+		<SessionProvider session={session}>
+			<Main />
+		</SessionProvider>
 	);
+}
 
-	return null;
+function Main() {
+	const session = useSession();
+	const router = useRouter();
+
+	const accessKey = api.accessKey.getByEmail.useQuery({
+		email: session.data?.user.email ?? "",
+	});
+
+	useEffect(() => {
+		if (!session.data) {
+			void signIn("azure-ad");
+		}
+	}, [session.data]);
+
+	useEffect(() => {
+		if (accessKey.data) {
+			void router.push(
+				`https://secure.electionbuddy.com/${accessKey.data.key}`,
+			);
+		}
+	}, [accessKey.data, router]);
+
+	return (
+		<div>
+			{accessKey.error ? (
+				<div>{accessKey.error.message}</div>
+			) : (
+				<div>Chargement... Loading...</div>
+			)}
+		</div>
+	);
 }

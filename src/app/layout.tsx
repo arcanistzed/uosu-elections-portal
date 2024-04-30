@@ -17,9 +17,9 @@ export const metadata = {
 
 export default function RootLayout({
 	children,
-}: {
+}: Readonly<{
 	children: React.ReactNode;
-}) {
+}>) {
 	return (
 		<html lang="en" className="h-full">
 			<body className={`font-sans ${inter.variable} h-full grid bg-gray-800`}>
