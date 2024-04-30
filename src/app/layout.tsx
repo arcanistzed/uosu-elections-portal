@@ -12,7 +12,7 @@ const inter = Inter({
 export const metadata = {
 	title: "Élections SÉUO - UOSU Elections",
 	description: "Élections SÉUO - UOSU Elections",
-	icons: [{ href: "/favicon.ico", sizes: "64x64", type: "image/x-icon" }],
+	icons: [],
 };
 
 export default function RootLayout({
@@ -22,7 +22,7 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en" className="h-full">
-			<body className={`font-sans ${inter.variable} h-full grid bg-gray-800`}>
+			<body className={`font-sans ${inter.variable} h-full grid bg-gray-950`}>
 				<TRPCReactProvider>{children}</TRPCReactProvider>
 			</body>
 		</html>

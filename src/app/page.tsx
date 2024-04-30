@@ -4,18 +4,15 @@ import { signIn } from "next-auth/react";
 import { useEffect } from "react";
 
 export default function Home() {
-	useEffect(() => {
+	/* useEffect(() => {
 		void signIn("azure-ad", { callbackUrl: `/vote` });
-	});
+	}); */
 
 	return (
-		<main className="flex items-center justify-center p-2 text-white">
-			<h1 className="text-3xl font-bold">
-				Chargement...
-				<br />
-				Loading...
-			</h1>
-			<img src="/logo.svg" alt="logo" />
+		<main className="flex flex-col items-center justify-center gap-8 p-2 text-white">
+			<h1 className="text-6xl font-bold">Chargement...</h1>
+			<h1 className="text-6xl font-bold">Loading...</h1>
+			<img src="/logo.svg" alt="logo" className="h-24" />
 		</main>
 	);
 }

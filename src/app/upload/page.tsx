@@ -8,7 +8,6 @@ type AccessKey = {
 	email: string;
 };
 
-
 const Form = () => {
 	const fileInputRef = useRef<HTMLInputElement>(null);
 	const fileRef = useRef<File | null>(null);
@@ -117,7 +116,7 @@ const Form = () => {
 	}, [mutation, password]);
 
 	return (
-		<div className="m-4 flex w-full flex-col gap-4 rounded-lg bg-gray-600 p-4 text-white shadow-lg lg:w-1/3 sm:w-3/4">
+		<div className="m-4 flex w-full flex-col gap-4 rounded-lg bg-gray-600 p-4 text-white shadow-lg sm:w-3/4 lg:w-1/3">
 			<h1 className="text-center text-2xl font-bold">
 				Télécharger des clés d&apos;accès
 				<br />
@@ -210,10 +209,12 @@ const Instructions = () => (
 
 export default function Upload() {
 	return (
-		<main className="flex flex-col items-center justify-evenly gap-4 lg:flex-row p-4">
-			<Form />
-			<Instructions />
-			<img src="/logo.svg" alt="logo" />
+		<main className="h-full flex flex-col justify-center">
+			<div className="flex flex-col items-center justify-evenly gap-4 p-4 lg:flex-row">
+				<Form />
+				<Instructions />
+			</div>
+			<img src="/logo.svg" alt="logo" className="h-24" />
 		</main>
 	);
 }
