@@ -10,7 +10,12 @@ export default function Home() {
 
 	return (
 		<main className="flex items-center justify-center p-2 text-white">
-			<h1 className="text-3xl font-bold">Chargement... Loading...</h1>
+			<h1 className="text-3xl font-bold">
+				Chargement...
+				<br />
+				Loading...
+			</h1>
+			<img src="/logo.svg" alt="logo" />
 		</main>
 	);
 }

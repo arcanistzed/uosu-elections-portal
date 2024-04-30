@@ -12,7 +12,7 @@ const inter = Inter({
 export const metadata = {
 	title: "Élections SÉUO - UOSU Elections",
 	description: "Élections SÉUO - UOSU Elections",
-	icons: [],
+	icons: [{ href: "/favicon.ico", sizes: "64x64", type: "image/x-icon" }],
 };
 
 export default function RootLayout({

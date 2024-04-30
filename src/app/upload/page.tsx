@@ -8,14 +8,6 @@ type AccessKey = {
 	email: string;
 };
 
-export default function Upload() {
-	return (
-		<main className="flex flex-col items-center justify-evenly gap-4 lg:flex-row p-4">
-			<Form />
-			<Instructions />
-		</main>
-	);
-}
 
 const Form = () => {
 	const fileInputRef = useRef<HTMLInputElement>(null);
@@ -215,3 +207,13 @@ const Instructions = () => (
 		</details>
 	</div>
 );
+
+export default function Upload() {
+	return (
+		<main className="flex flex-col items-center justify-evenly gap-4 lg:flex-row p-4">
+			<Form />
+			<Instructions />
+			<img src="/logo.svg" alt="logo" />
+		</main>
+	);
+}
