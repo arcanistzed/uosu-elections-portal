@@ -61,6 +61,23 @@ const Form = () => {
 			return { key, email };
 		};
 
+		// Upload a batch of access keys
+		const uploadBatch = async (batch: AccessKey[]) => {
+			try {
+				await mutation.mutateAsync({
+					password,
+					list: batch,
+				});
+			} catch (error) {
+				setStatus(
+					error instanceof Error
+						? `Error: ${error.message}`
+						: "Une erreur inconnue s'est produite. An unknown error occurred.",
+				);
+				reset();
+			}
+		};
+
 		// Handle file upload
 		const onUpload = async (file: File) => {
 			const text = await file.text();
@@ -87,24 +104,18 @@ const Form = () => {
 				.map(row => parseAccessKey(row, indexes))
 				.filter(Boolean) as AccessKey[];
 
-			// Try to upload list
-			try {
-				await mutation.mutateAsync({
-					password,
-					list,
-				});
-			} catch (error) {
+			// Define batch size
+			const batchSize = 1000;
+
+			// Process batches
+			for (let i = 0; i < list.length; i += batchSize) {
+				const batch = list.slice(i, i + batchSize);
+				await uploadBatch(batch);
 				setStatus(
-					error instanceof Error
-						? `Error: ${error.message}`
-						: "Une erreur inconnue s'est produite. An unknown error occurred.",
+					`Uploaded ${Math.min(i + batchSize, list.length)} of ${list.length} keys.`,
 				);
-				reset();
-				return;
 			}
-			setStatus(
-				`${list.length} clés d'accès téléchargées! Uploaded ${list.length} access keys!`,
-			);
+
 			reset();
 		};
 
